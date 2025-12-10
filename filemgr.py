@@ -75,9 +75,25 @@ def get_drive_root(path):
 
 def ensure_trash_root(root):
     trash_root = Path(root) / '.filemgr_trash'
-    if not trash_root.exists():
-        trash_root.mkdir(parents=True, exist_ok=True)
-    return trash_root
+    try:
+        if not trash_root.exists():
+            trash_root.mkdir(parents=True, exist_ok=True)
+        return trash_root
+    except Exception:
+        # Fallback: try to create .filemgr_trash in the user's temp dir or the
+        # parent directory of the provided root path. This helps CI runners
+        # or locked/system roots where creating a root-level folder fails.
+        import tempfile
+
+        fallback = Path(tempfile.gettempdir()) / '.filemgr_trash'
+        try:
+            fallback.mkdir(parents=True, exist_ok=True)
+            return fallback
+        except Exception:
+            # Final fallback: use current working directory
+            cwd_trash = Path.cwd() / '.filemgr_trash'
+            cwd_trash.mkdir(parents=True, exist_ok=True)
+            return cwd_trash
 
 
 def move_to_trash(path):
@@ -277,7 +293,7 @@ Commands:
 
 # Command-line entry
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description='Interactive CLI File Manager (prototype)')
     parser.add_argument('--interactive', '-i', action='store_true', help='Start interactive shell')
     parser.add_argument('cmd', nargs='*', help='Optional CLI command (see help)')
@@ -286,7 +302,7 @@ if __name__ == '__main__':
     if args.interactive or not args.cmd:
         repl()
     else:
-        # Allow some single shot commands like: filemgr.py rm "M:\temp\Takeout" --force
+        # Allow some single shot commands like: filemgr.py rm "M:\\temp\\Takeout" --force
         # Very limited parsing
         parts = args.cmd
         if parts[0] == 'preview' and len(parts) > 1:
@@ -297,3 +313,7 @@ if __name__ == '__main__':
             remove_recursive(parts[1], force='--force' in parts)
         else:
             print('단일 명령 파싱 불가 혹은 지원되지 않음. interactive 모드로 실행하세요.')
+
+
+if __name__ == '__main__':
+    main()

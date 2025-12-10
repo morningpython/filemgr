@@ -20,5 +20,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        # Install this package in editable mode so tests can import it
+        pip install -e .
     - name: Run tests
       run: pytest -q
