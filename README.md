@@ -40,3 +40,37 @@ python filemgr.py -i
 
 ## 기여
 이 스크립트는 학습/프로토타입 목적입니다. 사용 전 소스 검토를 권장합니다.
+
+## Git 로컬 시작 가이드
+프로젝트를 로컬에서 시작하고 GitHub에 올리기 위한 기본 단계:
+
+1. 로컬 저장소 초기화 및 첫 커밋
+```powershell
+cd path\to\filemgr-prototype
+git init -b main
+git add .
+git commit -m "Initial commit: FileMgr prototype"
+git branch develop
+git checkout develop
+```
+
+2. 풀 리퀘스트(Feature 브랜치 예제)
+```powershell
+git checkout -b feature/cli
+# 변경 작업 후
+git add .; git commit -m "Add feature X"
+git push -u origin feature/cli
+```
+
+3. 원격 저장소에 push 및 PR 생성
+```powershell
+git remote add origin git@github.com:youruser/filemgr.git
+git push -u origin main
+git push -u origin develop
+```
+
+4. PR 템플릿과 CI가 준비되었습니다. 원격 저장소에 push하면 GitHub Actions가 테스트를 자동으로 실행합니다.
+
+---
+
+안내: 저는 프로젝트 로컬 초기화 및 브랜치/CI/템플릿 설정까지 완료했습니다. 원하시면 `git remote add` 후에 GitHub에 push할 명령어도 만들어 드립니다.
