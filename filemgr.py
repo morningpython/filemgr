@@ -277,7 +277,7 @@ Commands:
 
 # Command-line entry
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description='Interactive CLI File Manager (prototype)')
     parser.add_argument('--interactive', '-i', action='store_true', help='Start interactive shell')
     parser.add_argument('cmd', nargs='*', help='Optional CLI command (see help)')
@@ -286,7 +286,7 @@ if __name__ == '__main__':
     if args.interactive or not args.cmd:
         repl()
     else:
-        # Allow some single shot commands like: filemgr.py rm "M:\temp\Takeout" --force
+        # Allow some single shot commands like: filemgr.py rm "M:\\temp\\Takeout" --force
         # Very limited parsing
         parts = args.cmd
         if parts[0] == 'preview' and len(parts) > 1:
@@ -297,3 +297,7 @@ if __name__ == '__main__':
             remove_recursive(parts[1], force='--force' in parts)
         else:
             print('단일 명령 파싱 불가 혹은 지원되지 않음. interactive 모드로 실행하세요.')
+
+
+if __name__ == '__main__':
+    main()
