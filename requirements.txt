@@ -1,0 +1,4 @@
+# runtime dependencies (none required beyond stdlib for this prototype)
+
+# Dev/test dependencies
+pytest>=7.0
