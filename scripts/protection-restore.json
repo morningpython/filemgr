@@ -1,0 +1,15 @@
+﻿{
+    "required_status_checks":  {
+                                   "contexts":  [
+                                                    "Python CI"
+                                                ],
+                                   "strict":  true
+                               },
+    "enforce_admins":  true,
+    "required_pull_request_reviews":  {
+                                          "required_approving_review_count":  0,
+                                          "require_code_owner_reviews":  false,
+                                          "dismiss_stale_reviews":  true
+                                      },
+    "restrictions":  null
+}

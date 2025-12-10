@@ -26,7 +26,6 @@ python filemgr.py -i
 - `takeown M:\temp\Takeout` - Windows에서 소유권을 취득하고 권한 부여 시도
 - `handles M:\temp\Takeout` - handle.exe 출력창을 보여줌 (설치 필요)
 
-## 동작 원리 (요약)
 1. 기본 동작은 휴지통(드라이브 루트의 `.filemgr_trash`)으로 이동합니다. 이는 완전 삭제를 방지하고 복구 가능하도록 합니다.
 2. 강제 삭제 옵션은 `takeown` + `icacls`를 활용하여 파일 소유권을 변경하고 재시도합니다.
 3. 잠금 문제를 해결하려면 `handles` 명령으로 잠금을 유발하는 프로세스를 찾고 종료하세요.
